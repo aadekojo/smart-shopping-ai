@@ -11,9 +11,7 @@ export async function POST(req: NextRequest) {
 
   const prompt = `
   Only respond with JSON. No explanation, no markdown.
-  
   The user is looking for products. Interpret this message and return 3 relevant product listings in this raw JSON array format:
-  
   [
     {
       "name": "Product name",
@@ -22,7 +20,6 @@ export async function POST(req: NextRequest) {
       "link": "https://example.com"
     }
   ]
-  
   User query: "${query}"
   `;
 
@@ -33,12 +30,12 @@ export async function POST(req: NextRequest) {
         { role: 'system', content: 'You are a helpful shopping assistant.' },
         { role: 'user', content: prompt },
       ],
-      temperature: 0.7,
-      max_tokens: 300,
+      temperature: 1.0,
+      max_tokens: 200,
     });
 
     const rawOutput = completion.choices[0].message?.content?.trim() || '';
-    console.log('🧠 DeepSeek Raw Output:', rawOutput);
+    console.log('DeepSeek Raw Output:', rawOutput);
 
     const jsonStart = rawOutput.indexOf('[');
     const jsonEnd = rawOutput.lastIndexOf(']');
@@ -51,8 +48,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ products });
   } catch (error: any) {
-    console.error('❌ DeepSeek AI error:', error.message);
-
+    console.error('DeepSeek AI error:', error.message);
     // Fallback for safety
     return NextResponse.json({
       products: [
