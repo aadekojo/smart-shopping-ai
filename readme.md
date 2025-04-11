@@ -1,6 +1,6 @@
 ###  **Vision: Smart Shopping Web App with Logistics Integration (Deliverado)**
 
-[Demo](https://delivarado.vercel.app)
+[Demo](https://deliverado.vercel.app/)
 ####  Flow Summary:
 
 1. **User searches** → AI fetches matching products (name, price, store)
