@@ -1,8 +1,9 @@
 'use client';
 
+import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useCart } from '../../app/context/CartContext';
-import { useState } from 'react';
+
 
 export default function PaymentPage() {
   const { cartItems, clearCart } = useCart();
