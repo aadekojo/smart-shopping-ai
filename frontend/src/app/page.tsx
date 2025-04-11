@@ -54,11 +54,16 @@ export default function HomePage() {
     setLoading(true);
     setProducts([]);
 
-    // Simulate search delay
-    setTimeout(() => {
-      setProducts(mockProducts); // You can later connect this to a real AI API
-      setLoading(false);
-    }, 1000);
+  // Here’s where the search API is called 
+  const res = await fetch('/api/ai-search', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query }),
+  });
+
+  const data = await res.json();
+  setProducts(data.products || []);
+  setLoading(false);
   };
 
   return (

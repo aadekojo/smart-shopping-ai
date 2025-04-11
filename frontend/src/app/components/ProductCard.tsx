@@ -27,7 +27,9 @@ const ProductCard: React.FC<Props> = ({ product }) => {
       <h3 className="text-lg font-semibold mb-1">{product.name}</h3>
       <p className="text-sm text-gray-400 mb-1">From: {product.store}</p>
       <p className="text-md font-bold mb-4">
-        {formatCurrency(Number(product.price), currency, locale)}
+        {formatCurrency( Number(product.price.toString().replace(/[^0-9.]/g, '')),
+  currency,
+  locale)}
       </p>
 
       <button
