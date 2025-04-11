@@ -76,8 +76,10 @@ export default function HomePage() {
           <div className="mt-12 animate-spin rounded-full h-12 w-12 border-t-4 border-white border-opacity-30" />
         ) : (
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {products.map((p, index) => (
+            <ProductCard
+                key={p.id || `${p.name}-${index}`}
+                product={p}/>
             ))}
           </div>
         )}
