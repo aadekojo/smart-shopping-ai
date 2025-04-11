@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useCart } from '../../app/context/CartContext';
 
-
-export default function PaymentPage() {
+function PaymentDetails() {
   const { cartItems, clearCart } = useCart();
   const searchParams = useSearchParams();
   const address = searchParams.get('address') || '';
@@ -15,7 +14,6 @@ export default function PaymentPage() {
   const [paid, setPaid] = useState(false);
 
   const handlePayment = async () => {
-    // Call send-quote API to trigger email notifications
     const res = await fetch('/api/send-quote', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -29,17 +27,15 @@ export default function PaymentPage() {
 
     const data = await res.json();
     if (data.success) {
-        clearCart();
-        setPaid(true);
+      clearCart();
+      setPaid(true);
     } else {
       alert('Payment failed (or email failed).');
     }
   };
 
   return (
-    <main className="min-h-screen bg-zinc-900 text-white p-6 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">💳 Payment</h1>
-
+    <>
       {!paid ? (
         <>
           <div className="mb-6 space-y-2">
@@ -60,7 +56,6 @@ export default function PaymentPage() {
             />
           </div>
 
-          {/* Fake payment form UI (real Stripe/Flutterwave can be added later) */}
           <div className="mb-6">
             <label className="block mb-2">Card Info (simulated)</label>
             <input
@@ -84,6 +79,19 @@ export default function PaymentPage() {
           ✅ Payment complete! Receipt sent. Your items are on their way. 🚚
         </p>
       )}
+    </>
+  );
+}
+
+export default function PaymentPage() {
+  return (
+    <main className="min-h-screen bg-zinc-900 text-white p-6 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">💳 Payment</h1>
+
+      {/* ✅ Wrap the part using useSearchParams in Suspense */}
+      <Suspense fallback={<p className="text-gray-400">Loading payment info...</p>}>
+        <PaymentDetails />
+      </Suspense>
     </main>
   );
 }
