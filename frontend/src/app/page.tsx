@@ -69,7 +69,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-zinc-900 text-white">
       <div className="flex flex-col items-center justify-start p-6">
-        <h1 className="text-3xl font-bold mb-6">🧠 AI Shopping Assistant</h1>
+        <h1 className="text-3xl font-bold mb-6"> Deliverado Shopping Assistant</h1>
         <SearchBar onSearch={handleSearch} />
 
         {loading ? (
@@ -82,6 +82,27 @@ export default function HomePage() {
           </div>
         )}
       </div>
+      <footer className="mt-auto pt-12 text-center text-sm text-gray-400">
+  Built by{' '}
+  <a
+    href="https://github.com/aadekojo"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-blue-400 hover:underline"
+  >
+    Adekojo Abimbola © 2025
+  </a>{' '}
+  |{' '}
+  <a
+    href="https://linkedin.com/in/adekojo-abimbola"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-blue-400 hover:underline"
+  >
+    LinkedIn
+  </a>
+</footer>
+
     </main>
   );
 }
